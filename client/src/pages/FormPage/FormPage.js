@@ -2,7 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { dataToDb } from '../../../src/services/services'
-import Inputs from '../../components/Inputs/Inputs'
+import Input from '../../components/Input/Input'
+import Radio from '../../components/Radio/Radio'
+import CheckBox from '../../components/Checkbox/CheckBox'
+import Submit from '../../components/Submit/Submit'
+import Date from '../../components/Date/Date'
+import Password from '../../components/Password/Password'
+import Email from '../../components/Email/Email'
+import Number from '../../components/Number/Number'
 
 
 
@@ -20,23 +27,53 @@ export default function FormPage() {
                 setFormData(res.data)
             })
     }, [])
- 
-    const inputsMethd = (e) => {
 
-        if(e.target.type === 'checkbox'){
-            setNewForm({ ...newForm, [e.target.name]: e.target.checked })
-        }else{
-            setNewForm({ ...newForm, [e.target.name]: e.target.value })
-        }
+    const setValue = (field, value) => {
+        setNewForm({ ...newForm, [field]: value })
     }
 
-
-    const allInp = formData.map(form => {
-        return (
-            <Inputs form={form} key={form._id} inputsMethd={inputsMethd} />
-        )
+    const renderFields = formData.map(field => {
+        if (field.type === 'text') {
+            return (
+                <Input field={field} key={field._id} setValue={setValue} />
+            )
+        }
+        else if (field.type === 'radio') {
+            return (
+                <Radio field={field} key={field._id} setValue={setValue} />
+            )
+        }
+        else if (field.type === 'checkbox') {
+            return (
+                <CheckBox field={field} key={field._id} setValue={setValue} />
+            )
+        }
+        else if (field.type === 'date') {
+            return (
+                <Date field={field} key={field._id} setValue={setValue} />
+            )
+        }
+        else if (field.type === 'password') {
+            return (
+                <Password field={field} key={field._id} setValue={setValue} />
+            )
+        }
+        else if (field.type === 'email') {
+            return (
+                <Email field={field} key={field._id} setValue={setValue} />
+            )
+        }
+        else if (field.type === 'number') {
+            return (
+                <Number field={field} key={field._id} setValue={setValue} />
+            )
+        }
+        else {
+            return (
+                <Submit field={field} key={field._id} />
+            )
+        }
     })
-
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -50,8 +87,8 @@ export default function FormPage() {
             <div className="row">
                 <div className="col-8 offset-2">
                     <form onSubmit={submitHandler}>
-                        {allInp}
-                    </form> 
+                        {renderFields}
+                    </form>
                 </div>
             </div>
         </div>
