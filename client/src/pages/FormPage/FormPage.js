@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { dataToDb } from '../../../src/services/services'
-import Check from '../../components/Check/Check'
 import Inputs from '../../components/Inputs/Inputs'
 
 
@@ -21,22 +20,16 @@ export default function FormPage() {
                 setFormData(res.data)
             })
     }, [])
-
-    //Methods onChange
-
-    const checkBoxMethod = (e) => {
-        setNewForm({ ...newForm, [e.target.name]: e.target.checked })
-    }
-
+ 
     const inputsMethd = (e) => {
-        setNewForm({ ...newForm, [e.target.name]: e.target.value })
+
+        if(e.target.type === 'checkbox'){
+            setNewForm({ ...newForm, [e.target.name]: e.target.checked })
+        }else{
+            setNewForm({ ...newForm, [e.target.name]: e.target.value })
+        }
     }
 
-    const allCheck = formData.map(form => {
-        return (
-            <Check form={form} key={form._id} checkBoxMethod={checkBoxMethod} />
-        )
-    })
 
     const allInp = formData.map(form => {
         return (
@@ -58,7 +51,6 @@ export default function FormPage() {
                 <div className="col-8 offset-2">
                     <form onSubmit={submitHandler}>
                         {allInp}
-                        {allCheck}
                     </form> 
                 </div>
             </div>

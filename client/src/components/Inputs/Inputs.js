@@ -6,9 +6,23 @@ export default function Inputs({ form, inputsMethd }) {
             {
                 form.type === 'checkbox'
                     ?
-                    null
-                    :
                     <>
+                        <label
+                            htmlFor={form.for}
+                            className='lead' 
+                        >
+                            {form.label}
+                        </label>
+                        <input
+                            type={form.type}
+                            name={form.name}
+                            id={form.id}
+                            className='ms-2 me-4'
+                            onChange={inputsMethd}
+                        />
+                    </>
+                    :
+                    <div>
                         <label 
                             htmlFor={form.for} 
                             className='lead me-2' 
@@ -23,7 +37,7 @@ export default function Inputs({ form, inputsMethd }) {
                             placeholder={form.placeholder}
                             onChange={inputsMethd}
                         /> <br /> <br />
-                    </>
+                    </div>
             }
         </>
     )
