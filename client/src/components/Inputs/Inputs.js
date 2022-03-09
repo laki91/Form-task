@@ -22,7 +22,7 @@ export default function Inputs({ form, inputsMethd }) {
                         />
                     </>
                     :
-                    <div>
+                    <>
                         <label 
                             htmlFor={form.for} 
                             className='lead me-2' 
@@ -37,7 +37,7 @@ export default function Inputs({ form, inputsMethd }) {
                             placeholder={form.placeholder}
                             onChange={inputsMethd}
                         /> <br /> <br />
-                    </div>
+                    </>
             }
         </>
     )
